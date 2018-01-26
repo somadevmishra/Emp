@@ -11,7 +11,8 @@
 <table>
 <tr> <td><label>User name</label></td> <td><input type="text" name="username"></td></tr>
 <tr> <td><label>Password</label></td> <td><input type="password" name="password"></td></tr>
-<tr><td colspan="2" align="center"><button type="submit">Login</button>
+<tr><td colspan="2"><input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}"/>  </td> </tr>
+<tr><td colspan="2" align="center"><button type="submit">Login</button></td></tr>
 </table>
 
 </form>
