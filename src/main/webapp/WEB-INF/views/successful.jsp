@@ -8,5 +8,11 @@
 </head>
 <body>
 <h2>Hello. You are successful</h2>
+
+<%--  <a href="${pageContext.request.contextPath}/logout">Logout</a> --%> 
+<form action="${pageContext.request.contextPath}/logout" method="post">
+	<button type="submit">Logout</button>
+	<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+</form>
 </body>
 </html>
