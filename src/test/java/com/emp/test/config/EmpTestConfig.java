@@ -1,26 +1,30 @@
-package com.emp.comfig;
+package com.emp.test.config;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import liquibase.Liquibase;
+import liquibase.integration.spring.SpringLiquibase;
+import liquibase.resource.ResourceAccessor;
 
 @Configuration
-@EnableWebMvc
-@ComponentScan(basePackages="com.emp")
-@PropertySource(value="classpath:project.properties", name="mysqlproperties")
-public class EmpConfig extends WebMvcConfigurerAdapter{
+@ComponentScan(basePackages="com.emp", excludeFilters = { 
+	    @Filter(type = FilterType.ANNOTATION, value = Configuration.class)
+	  })
+@WebAppConfiguration
+@PropertySource(value="classpath:inMemoryDB.properties", name="h2DBproperties")
+public class EmpTestConfig {
 
 	@Value("${jdbc.driver}")
     private String jdbcDriver;
@@ -33,34 +37,34 @@ public class EmpConfig extends WebMvcConfigurerAdapter{
 
     @Value("${jdbc.password}")
     private String password;
-
-    @Bean
+    
+   
+	@Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(jdbcDriver);
-        dataSource.setUrl(jdbcUrl);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
         return dataSource;
     }
-    
-	@Bean
-	public ViewResolver empViewResolver(){
-		InternalResourceViewResolver irvr= new InternalResourceViewResolver();
-		irvr.setViewClass(JstlView.class);
-		irvr.setPrefix("WEB-INF/views/");
-		irvr.setSuffix(".jsp");
-		
-		return irvr;
-	}
 	
 	@Bean
 	public JdbcTemplate jdbcTemplate(){
 		return new JdbcTemplate(dataSource());
 	}
 	
+	@Bean
 	public NamedParameterJdbcTemplate namedJdbcTemplate(){
 		return new NamedParameterJdbcTemplate(dataSource());
 	}
 	
+	@Bean
+	public SpringLiquibase liquibase(){
+		SpringLiquibase liquibase = new SpringLiquibase();
+	    liquibase.setChangeLog("classpath:liquibase.xml");
+	    liquibase.setDataSource(dataSource());
+	    return liquibase;
+	}
+
 }
