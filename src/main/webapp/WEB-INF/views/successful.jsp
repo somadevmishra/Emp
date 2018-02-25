@@ -14,5 +14,10 @@
 	<button type="submit">Logout</button>
 	<input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 </form>
+<form action="${pageContext.request.contextPath}/upload?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+	<input type="file" name="file" id="file">
+	
+	<button type="submit">Upload</button>
+</form>
 </body>
 </html>
