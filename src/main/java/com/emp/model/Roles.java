@@ -2,6 +2,9 @@ package com.emp.model;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Roles {
 
 	private Integer id;

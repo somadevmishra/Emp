@@ -2,11 +2,9 @@ package com.emp.service;
 
 import java.util.List;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.emp.model.Users;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
 	Users getUserByEmail(String emailId);
 	

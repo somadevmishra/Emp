@@ -17,7 +17,19 @@ public class UserDaoTest extends BaseTest{
 	
 	@Test
 	public void testGetUserByEmail() {
-		assertTrue(true);
+		Users userObj= new Users();
+		userObj.setUserName("Sid");
+		userObj.setContinousFailedLogin(0);
+		userObj.setCreatedBy(1);
+		userObj.setEmailId("sid456@gmail.com");
+		userObj.setModifiedBy(1);
+		userObj.setPassword("pass123");
+		userObj.setStatus(1);
+		
+		userDao.createUser(userObj);
+		
+		Users getUser= userDao.getUserByEmail("sid456@gmail.com");
+		assertEquals("Sid",getUser.getUserName());
 	}
 
 	@Test

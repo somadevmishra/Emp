@@ -16,15 +16,15 @@ public class UserRowMapper implements RowMapper<Users> {
 		
 		Users user= new Users();
 		user.setId(rs.getInt("id"));
-		user.setUserName(rs.getString("userName"));
+		user.setUserName(rs.getString("Name"));
 		user.setEmailId(rs.getString("emailId"));
 		user.setPassword(rs.getString("password"));
 		user.setStatus(rs.getInt("status"));
-		user.setContinousFailedLogin(rs.getInt("continousFailedLogin"));
-		user.setCreatedOn(rs.getDate("createdOn"));
-		user.setModifiedOn(rs.getDate("modifiedOn"));
-		user.setCreatedBy(rs.getInt("createdBy"));
-		user.setModifiedBy(rs.getInt("modifiedBy"));
+		user.setContinousFailedLogin(rs.getInt("continous_failed_login"));
+		user.setCreatedOn(rs.getDate("created_on"));
+		user.setModifiedOn(rs.getDate("last_modified_on"));
+		user.setCreatedBy(rs.getInt("created_by"));
+		user.setModifiedBy(rs.getInt("modified_by"));
 		return user;
 	}
 

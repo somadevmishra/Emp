@@ -3,6 +3,10 @@ package com.emp.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Users implements Serializable{
 
 	/**
@@ -20,6 +24,14 @@ public class Users implements Serializable{
 	private Date modifiedOn;
 	private Integer createdBy;
 	private Integer modifiedBy;
+	
+	public Users(){
+		
+	}
+	
+	public Users(Users user) {
+		BeanUtils.copyProperties(user, this);
+	}
 	public Integer getId() {
 		return id;
 	}

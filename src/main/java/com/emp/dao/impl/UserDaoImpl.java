@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ import com.emp.model.Users;
 import com.emp.rowmapper.UserRowMapper;
 
 @Repository
+@Qualifier ("userDao")
 public class UserDaoImpl implements UserDAO {
 
 	private static final String GET_USER_BY_EMAIL = "SELECT * FROM USER WHERE EMAILID = ?";
@@ -25,6 +27,7 @@ public class UserDaoImpl implements UserDAO {
 	
 	private static final String CREATE_USER= "Insert into user (Name, password, emailid, created_on, status, last_modified_on, continous_failed_login, created_by, modified_by) "
 			+ "values(:name, :password, :emailid, :created_on, :status, :last_modified_on, :continous_failed_login, :created_by, :modified_by)";
+	
 	@Autowired
 	UserRowMapper userRowMapper;
 	
